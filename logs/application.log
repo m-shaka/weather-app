@@ -1,0 +1,9 @@
+2016-03-19 21:44:31,242 - [INFO] - from play in pool-2320-thread-4 
+Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2016-03-19 21:44:39,606 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:postgresql://127.0.0.1:5432/playdb
+
+2016-03-19 21:44:42,509 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+

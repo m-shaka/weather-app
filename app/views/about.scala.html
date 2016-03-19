@@ -1,0 +1,25 @@
+
+@main("about | Ozora Weather", "about") {
+  <div class="container">
+    <div class="row">
+      <h1 >このサイトについて</h1>
+      <h2 >環境</h2>
+
+      <ul>
+        <li>Scala(2.11.7)</li>
+        <li>Play Framework(2.3.8)</li>
+        <li>Akka(2.4)</li>
+        <li>Play-Slick(0.8.1)</li>
+        <li>Postgresql(9.3)</li>
+      </ul>
+
+      <h2 >概略</h2>
+      <p>OpenWeatherMapのAPIからお天気情報をJSONで取得し表示しています。今後やりたいこととしては</p>
+      <ol style="list-style-type: decimal">
+        <li>DBに記録している最高気温、最低気温の情報を使い一週間の変化をグラフで示す（jsのライブラリを使う)</li>
+        <li>全都道府県の天気を表示する。（JQueryで非同期に切り替える）</li>
+      </ol>
+      <p>などが挙げられます。</p>
+    </div>
+  </div>
+}

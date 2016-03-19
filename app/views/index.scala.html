@@ -1,0 +1,74 @@
+@import play.api.libs.json.Json
+@import models._
+@import org.joda.time.LocalDate
+@(detail: WeatherDetail, temps: CurrentTemps, dbData: List[TempData], tempsTommorow: DailyTemp, detailTomorrow: WeatherDetail)
+
+@main("Ozora Weather", "index") {
+<div class="container">
+  <div class="row">
+    <h2>東京のお天気</h2>
+    <div class="col-sm-6">
+      <h3>今日</h3>
+      <h4>
+        <img src="http://openweathermap.org/img/w/@(detail.icon).png" width=50 height=50> @temps.temp ℃（現在）<br>
+        @detail.description
+      </h4>
+      <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td>最高気温</td>
+            <td>
+              @if(dbData != Nil && dbData.head.max != null.asInstanceOf[Double]) {
+                @dbData.head.max
+              } else {
+                @temps.temp_max
+              }  ℃
+            </td>
+          </tr>
+          <tr>
+            <td>最低気温</td>
+            <td>
+              @if(dbData != Nil && dbData.head.min != null.asInstanceOf[Double]) {
+                @dbData.head.min
+              } else {
+                @temps.temp_min
+              }  ℃
+            </td>
+          </tr>
+          <tr>
+            <td>気圧</td>
+            <td>@temps.pressure pha</td>
+          </tr>
+          <tr>
+            <td>湿度</td>
+            <td>@temps.humidity %</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-6">
+      <h3>明日</h3>
+      <h4>
+        <img src="http://openweathermap.org/img/w/@(detailTomorrow.icon).png" width=50 height=50> @tempsTommorow.day ℃（平均）<br>
+        @detailTomorrow.description
+      </h4>
+      <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td>最高気温</td>
+            <td>@tempsTommorow.max ℃</td>
+          </tr>
+          <tr>
+            <td>最低気温</td>
+            <td>@tempsTommorow.min ℃</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+}
