@@ -28,15 +28,15 @@ object Application extends Controller {
     // 現在の天気
     val currentJson =
       WS.url(s"http://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=${openWeatherID}")
-      .get().map(_.json)
+      .get()
 
     // 今日明日の予報（明日分のみ使用）
     val twoDaysJson =
       WS.url(s"http://api.openweathermap.org/data/2.5/forecast/daily?q=Tokyo&units=metric&cnt=2&appid=${openWeatherID}")
-      .get().map(_.json)
+      .get()
 
-    val json = Await.result(currentJson, Duration.Inf)
-    val json2 = Await.result(twoDaysJson, Duration.Inf)
+    val json = Await.result(currentJson, Duration.Inf).json
+    val json2 = Await.result(twoDaysJson, Duration.Inf).json
 
     val temps =
       (json \ "main")

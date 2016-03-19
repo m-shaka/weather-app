@@ -25,8 +25,8 @@ class SampleActor extends Actor {
   val openWeatherID = sys.env("OPEN_WEATHER_ID")
   val source =
     WS.url(s"http://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=${openWeatherID}")
-    .get().map(_.json)
-  val json = Await.result(source, Duration.Inf)
+    .get()
+  val json = Await.result(source, Duration.Inf).json
   val temps = (json \ "main").validate[CurrentTemps].getOrElse(null)
 
   def insertMin() = {
