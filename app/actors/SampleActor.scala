@@ -8,6 +8,10 @@ import play.api.Play.current
 import slick.driver.PostgresDriver.simple._
 import org.joda.time.LocalDate
 import com.github.tototoshi.slick.PostgresJodaSupport._
+import play.api.libs.ws._
+import scala.concurrent.duration.{ Duration, MILLISECONDS }
+import scala.concurrent.{ Future, Await }
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class SampleActor extends Actor {
 
@@ -15,11 +19,14 @@ class SampleActor extends Actor {
     case "min" => insertMin()
     case "max" => insertMax()
     case "delete" => deleteOldData()
-    }
+  }
 
-  val source = io.Source.fromURL("http://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=4c2b461153c45c9a28757925a1991646")
-
-  val json = Json.parse(source.mkString)
+  // 現在の天気情報を取得、毎日定刻にDBに入れる
+  val openWeatherID = sys.env("OPEN_WEATHER_ID")
+  val source =
+    WS.url(s"http://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=${openWeatherID}")
+    .get().map(_.json)
+  val json = Await.result(source, Duration.Inf)
   val temps = (json \ "main").validate[CurrentTemps].getOrElse(null)
 
   def insertMin() = {
