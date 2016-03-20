@@ -26,28 +26,37 @@ class SampleActor extends Actor {
   val source =
     WS.url(s"http://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=${openWeatherID}")
     .get()
-  val json = Await.result(source, Duration.Inf).json
-  val temps = (json \ "main").validate[CurrentTemps].getOrElse(null)
 
   def insertMin() = {
-    DB.withSession { implicit session =>
-      val tempdatum = TableQuery[TempDatum]
-      val insertData = TempData(None, "Tokyo", temps.temp, null.asInstanceOf[Int] , new LocalDate())
-      tempdatum.insert(insertData)
+    source.onSuccess{
+      case response => {
+        val temps = (response.json \ "main").validate[CurrentTemps].getOrElse(null)
+
+        DB.withSession { implicit session =>
+          val tempdatum = TableQuery[TempDatum]
+          val insertData = TempData(None, "Tokyo", temps.temp, null.asInstanceOf[Int] , new LocalDate())
+          tempdatum.insert(insertData)
+        }
+      }
     }
-    println("creating test data")
   }
 
   def insertMax() = {
-    DB.withSession { implicit session =>
-      val temdatum = TableQuery[TempDatum]
-      val date = new LocalDate()
-      val city = "Tokyo"
+    source.onSuccess{
+      case response => {
+        val temps = (response.json \ "main").validate[CurrentTemps].getOrElse(null)
 
-      temdatum
-      .filter(row => row.date === date && row.city === city)
-      .map(_.max)
-      .update(temps.temp)
+        DB.withSession { implicit session =>
+          val temdatum = TableQuery[TempDatum]
+          val date = new LocalDate()
+          val city = "Tokyo"
+
+          temdatum
+          .filter(row => row.date === date && row.city === city)
+          .map(_.max)
+          .update(temps.temp)
+        }
+      }
     }
   }
 
