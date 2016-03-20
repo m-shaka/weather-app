@@ -6,13 +6,19 @@
       <a class="navbar-brand">Ozora Weather</a>
     </div>
     <ul class="nav navbar-nav">
-      @if(page == "index") {
+      @(if(page == "index") {
         <li class="active"><a href="/">Top</a></li>
+        <li><a href="/statistic">Statistic</a></li>
         <li><a href="/about">About</a></li>
+      } else if(page == "about") {
+        <li><a href="/">Top</a></li>
+        <li><a href="/statistic">Statistic</a></li>
+        <li class="active"><a href="/about">About</a></li>
       } else {
         <li><a href="/">Top</a></li>
-        <li class="active"><a href="/about">About</a></li>
-      }
+        <li class="active"><a href="/statistic">Statistic</a></li>
+        <li><a href="/about">About</a></li>
+      })
     </ul>
   </div>
 </nav>

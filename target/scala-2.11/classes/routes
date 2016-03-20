@@ -1,2 +1,3 @@
 GET     /                           controllers.Application.index
 GET     /about                      controllers.Application.about
+GET     /statistic                  controllers.Application.statistic

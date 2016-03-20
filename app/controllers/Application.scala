@@ -28,13 +28,13 @@ object Application extends Controller {
     val currentJson =
       WS.url(s"http://api.openweathermap.org/data/2.5/weather?id=1850147&units=metric&appid=${openWeatherID}")
       .get()
-    val res1 = Await.result(currentJson, Duration(100000, MILLISECONDS))
+    val res1 = Await.result(currentJson, Duration.Inf)
 
     // 今日明日の予報（明日分のみ使用）
     val twoDaysJson =
       WS.url(s"http://api.openweathermap.org/data/2.5/forecast/daily?id=1850147&units=metric&cnt=2&appid=${openWeatherID}")
       .get()
-    val res2 = Await.result(twoDaysJson, Duration(100000, MILLISECONDS))
+    val res2 = Await.result(twoDaysJson, Duration.Inf)
 
     val json1 = res1.json
     val temps =
@@ -72,5 +72,16 @@ object Application extends Controller {
 
   def about = Action {
     Ok(views.html.about())
+  }
+
+  def statistic = Action {
+    DB.withSession {implicit session =>
+      val tempdatum = TableQuery[TempDatum]
+      val date = new LocalDate().minusWeeks(1)
+      val city = "Tokyo"
+      val weeklyTemps =
+        tempdatum.filter(row => row.date >= date && row.city === city).list
+      Ok(views.html.statistic(weeklyTemps))
+    }
   }
 }
