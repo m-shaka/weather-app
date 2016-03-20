@@ -25,18 +25,17 @@ object Application extends Controller {
     val openWeatherID = sys.env("OPEN_WEATHER_ID")
 
     // 現在の天気
-    val currentJson =
-      WS.url(s"http://api.openweathermap.org/data/2.5/weather?id=1850147&units=metric&appid=${openWeatherID}")
-      .get()
-    val res1 = Await.result(currentJson, Duration.Inf)
+    lazy val currentJson =
+      io.Source.fromURL(s"http://api.openweathermap.org/data/2.5/weather?id=1850147&units=metric&appid=${openWeatherID}")
+
+    val json1 = Json.parse(currentJson.mkString)
 
     // 今日明日の予報（明日分のみ使用）
-    val twoDaysJson =
-      WS.url(s"http://api.openweathermap.org/data/2.5/forecast/daily?id=1850147&units=metric&cnt=2&appid=${openWeatherID}")
-      .get()
-    val res2 = Await.result(twoDaysJson, Duration.Inf)
+    lazy val twoDaysJson =
+      io.Source.fromURL(s"http://api.openweathermap.org/data/2.5/forecast/daily?id=1850147&units=metric&cnt=2&appid=${openWeatherID}")
 
-    val json1 = res1.json
+    val json2 = Json.parse(twoDaysJson.mkString)
+
     val temps =
       (json1 \ "main")
       .validate[CurrentTemps]
@@ -47,7 +46,6 @@ object Application extends Controller {
       .validate[List[WeatherDetail]]
       .getOrElse(null).head
 
-    val json2 = res2.json
     val tempsTommorow =
       (json2 \\ "temp")
       .last
