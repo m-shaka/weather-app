@@ -26,13 +26,13 @@ object Application extends Controller {
 
     // 現在の天気
     val currentJson =
-      WS.url(s"http://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=${openWeatherID}")
+      WS.url(s"http://api.openweathermap.org/data/2.5/weather?id=1850147&units=metric&appid=${openWeatherID}")
       .get()
     val res1 = Await.result(currentJson, Duration(100000, MILLISECONDS))
 
     // 今日明日の予報（明日分のみ使用）
     val twoDaysJson =
-      WS.url(s"http://api.openweathermap.org/data/2.5/forecast/daily?q=Tokyo&units=metric&cnt=2&appid=${openWeatherID}")
+      WS.url(s"http://api.openweathermap.org/data/2.5/forecast/daily?id=1850147&units=metric&cnt=2&appid=${openWeatherID}")
       .get()
     val res2 = Await.result(twoDaysJson, Duration(100000, MILLISECONDS))
 

@@ -24,7 +24,7 @@ class SampleActor extends Actor {
   // 現在の天気情報を取得、毎日定刻にDBに入れる
   val openWeatherID = sys.env("OPEN_WEATHER_ID")
   val source =
-    WS.url(s"http://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=${openWeatherID}")
+    WS.url(s"http://api.openweathermap.org/data/2.5/weather?id=1850147&units=metric&appid=${openWeatherID}")
     .get()
 
   def insertMin() = {
