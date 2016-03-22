@@ -18,45 +18,37 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 object Application extends Controller {
 
-  def index = Action { rs =>
-    // 最高気温、最低気温はDBにデータがあればそれを表示する
-    val dbData: List[TempData] = getDBData()
+  def getJsonFromApi(url: String) = {
+    implicit val context = play.api.libs.concurrent.Execution.Implicits.defaultContext
+    val futureResponse =
+      WS.url(url).get().map{
+        response => response.json
+      }
+    Await.result(futureResponse, Duration.Inf)
+  }
 
-    val openWeatherID = sys.env("OPEN_WEATHER_ID")
+  def index = Action { request =>
 
-    // 現在の天気
-    lazy val currentJson =
-      io.Source.fromURL(s"http://api.openweathermap.org/data/2.5/weather?id=1850147&units=metric&appid=${openWeatherID}")
+    val cityID = "130010"
+    val weatherInfoUrl = s"http://weather.livedoor.com/forecast/webservice/json/v1?city=${cityID}"
+    val json = getJsonFromApi(weatherInfoUrl)
 
-    val json1 = Json.parse(currentJson.mkString)
+    val forecasts = (json \ "forecasts")
+    val images = (forecasts \\ "image").map(
+      day => day.validate[WeatherImage].getOrElse(null)
+    ).toList
+    val dates = (forecasts \\ "date").map(
+      day => day.validate[String].getOrElse("Error")
+    ).toList
+    val maxes = (forecasts \\ "temperature").map(
+      day => (day \ "max" \ "celsius").validate[String].getOrElse("--")
+    ).toList
+    val mins = (forecasts \\ "temperature").map(
+      day => (day \ "min" \ "celsius").validate[String].getOrElse("--")
+    ).toList
 
-    // 今日明日の予報（明日分のみ使用）
-    lazy val twoDaysJson =
-      io.Source.fromURL(s"http://api.openweathermap.org/data/2.5/forecast/daily?id=1850147&units=metric&cnt=2&appid=${openWeatherID}")
+    Ok(views.html.index(images, dates, maxes, mins))
 
-    val json2 = Json.parse(twoDaysJson.mkString)
-
-    val temps =
-      (json1 \ "main")
-      .validate[CurrentTemps]
-      .getOrElse(null)
-
-    val detail =
-      (json1 \ "weather")
-      .validate[List[WeatherDetail]]
-      .getOrElse(null).head
-
-    val tempsTommorow =
-      (json2 \\ "temp")
-      .last
-      .validate[DailyTemp].getOrElse(null)
-
-    val detailTomorrow =
-      (json2 \\ "weather")
-      .last
-      .validate[List[WeatherDetail]].getOrElse(null).head
-
-    Ok(views.html.index(detail, temps, dbData, tempsTommorow, detailTomorrow))
   }
 
   def getDBData() = {

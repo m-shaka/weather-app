@@ -22,20 +22,24 @@ class SampleActor extends Actor {
   }
 
   // 現在の天気情報を取得、毎日定刻にDBに入れる
-  val openWeatherID = sys.env("OPEN_WEATHER_ID")
+  val cityID = "130010"
+  val weatherInfoUrl = s"http://weather.livedoor.com/forecast/webservice/json/v1?city=${cityID}"
+
   lazy val source =
-    WS.url(s"http://api.openweathermap.org/data/2.5/weather?id=1850147&units=metric&appid=${openWeatherID}")
+    WS.url(weatherInfoUrl)
     .get()
 
   def insertMin() = {
     source.onSuccess{
       case response => {
-        val temps = (response.json \ "main").validate[CurrentTemps].getOrElse(null)
-
+        val min = (response.json \ "forecasts" \\ "temperature").map(
+          day => (day \ "min" \ "celsius").validate[String].getOrElse(null)
+        ).head
         DB.withSession { implicit session =>
           val tempdatum = TableQuery[TempDatum]
-          val insertData = TempData(None, "Tokyo", temps.temp, null.asInstanceOf[Int] , new LocalDate())
+          val insertData = TempData(None, "Tokyo", min.toInt, null.asInstanceOf[Int] , new LocalDate())
           tempdatum.insert(insertData)
+          println("inserting now!!!")
         }
       }
     }
@@ -44,7 +48,9 @@ class SampleActor extends Actor {
   def insertMax() = {
     source.onSuccess{
       case response => {
-        val temps = (response.json \ "main").validate[CurrentTemps].getOrElse(null)
+        val max = (response.json \ "forecasts" \\ "temperature").map(
+          day => (day \ "max" \ "celsius").validate[String].getOrElse(null)
+        ).head
 
         DB.withSession { implicit session =>
           val temdatum = TableQuery[TempDatum]
@@ -54,7 +60,9 @@ class SampleActor extends Actor {
           temdatum
           .filter(row => row.date === date && row.city === city)
           .map(_.max)
-          .update(temps.temp)
+          .update(max.toInt)
+
+        println("updating now!!!")
         }
       }
     }

@@ -32,12 +32,13 @@ Seq[Any](format.raw/*1.46*/("""
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
         <!-- Latest compiled and minified JavaScript -->
+        <script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body>
-        """),_display_(/*17.10*/navi(page)),format.raw/*17.20*/("""
-        """),_display_(/*18.10*/content),format.raw/*18.17*/("""
-    """),format.raw/*19.5*/("""</body>
+        """),_display_(/*18.10*/navi(page)),format.raw/*18.20*/("""
+        """),_display_(/*19.10*/content),format.raw/*19.17*/("""
+    """),format.raw/*20.5*/("""</body>
 </html>
 """))}
   }
@@ -51,11 +52,11 @@ Seq[Any](format.raw/*1.46*/("""
 }
               /*
                   -- GENERATED --
-                  DATE: Sat Mar 19 21:44:33 JST 2016
+                  DATE: Tue Mar 22 16:47:06 JST 2016
                   SOURCE: /home/vagrant/app/app/views/main.scala.html
-                  HASH: 0085a16cee1abfe20ac630c3a7cdadeef16e0c06
-                  MATRIX: 516->1|648->45|676->47|753->98|778->103|1585->883|1616->893|1653->903|1681->910|1713->915
-                  LINES: 19->1|22->1|24->3|28->7|28->7|38->17|38->17|39->18|39->18|40->19
+                  HASH: 9e634a5ca4246c706f4d7a1568bc2e57f55fa422
+                  MATRIX: 516->1|648->45|676->47|753->98|778->103|1660->958|1691->968|1728->978|1756->985|1788->990
+                  LINES: 19->1|22->1|24->3|28->7|28->7|39->18|39->18|40->19|40->19|41->20
                   -- GENERATED --
               */
           
