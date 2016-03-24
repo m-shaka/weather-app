@@ -11,7 +11,7 @@ import akka.actor.Actor
 import org.joda.time.LocalDate
 import com.github.tototoshi.slick.PostgresJodaSupport._
 import play.api.libs.ws._
-import scala.concurrent.duration.{ Duration, MILLISECONDS }
+import scala.concurrent.duration.Duration
 import scala.concurrent.{ Future, Await }
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -56,7 +56,9 @@ object Application extends Controller {
       val tempdatum = TableQuery[TempDatum]
       val date = new LocalDate()
       val city = "Tokyo"
-      tempdatum.filter(row => row.date === date && row.city === city).list
+      tempdatum
+      .filter(row => row.date === date && row.city === city)
+      .list
     }
   }
 
@@ -70,7 +72,11 @@ object Application extends Controller {
       val date = new LocalDate().minusWeeks(1)
       val city = "Tokyo"
       val weeklyTemps =
-        tempdatum.filter(row => row.date >= date && row.city === city).list
+        tempdatum
+        .filter(row => row.date >= date && row.city === city)
+        .sortBy(_.date)
+        .list
+
       Ok(views.html.statistic(weeklyTemps))
     }
   }

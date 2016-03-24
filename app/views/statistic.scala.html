@@ -3,9 +3,41 @@
 
 @main("statistic | Ozora Weather", "statistic") {
   <div class="container">
-    <div class="row">
-      preparing...<br>
+    preparing ...
+    <div class="row" id="graph">
       <!-- @weeklyTemps.length -->
     </div>
   </div>
+
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script type="text/javascript">
+    var chart;
+    var dates = [];
+    var maxes = [];
+    var mins = [];
+    @for(temp <- weeklyTemps){
+      dates.push("@(temp.date)".replace(/-/g, "/"));
+      maxes.push(@temp.max);
+      mins.push(@temp.min);
+    }
+
+    function draw() {
+      var options = {
+        chart: {renderTo: "graph"},
+        title: {text: "東京の気温推移"},
+        xAxis: {
+          title: {text: "日付"},
+          categories: dates
+        },
+        yAxis: {title: {text: "気温（℃）"}},
+        series: [
+          {name: "最低気温", data: mins},
+          {name: "最高気温", data: maxes, color: '#DD0000'}
+        ]
+      }
+      chart = new Highcharts.Chart(options);
+    }
+    document.body.onload = draw();
+
+  </script>
 }

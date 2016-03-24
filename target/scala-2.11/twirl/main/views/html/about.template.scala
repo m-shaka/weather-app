@@ -34,10 +34,10 @@ Seq[Any](_display_(/*2.2*/main("about | Ozora Weather", "about")/*2.40*/ {_displ
       </ul>
 
       <h2 >概略</h2>
-      <p>OpenWeatherMapのAPIからお天気情報をJSONで取得し表示しています。動作はかなり不安定でよくエラーを吐きます……。今後やりたいこととしては</p>
+      <p>livedoorさんのWeather HackのAPIからお天気情報をJSONで取得し表示しています。動作はかなり不安定でよくエラーを吐きます……。今後やりたいこととしては</p>
       <ol style="list-style-type: decimal">
         <li>DBに記録している最高気温、最低気温の情報を使い一週間の変化をグラフで示す（jsのライブラリを使う)</li>
-        <li>全都道府県の天気を表示する。（JQueryで非同期に切り替える）</li>
+        <li>全都道府県の天気を表示する。（JQueryでページ遷移しないで切り替える）</li>
       </ol>
       <p>などが挙げられます。</p>
     </div>
@@ -55,10 +55,10 @@ Seq[Any](_display_(/*2.2*/main("about | Ozora Weather", "about")/*2.40*/ {_displ
 }
               /*
                   -- GENERATED --
-                  DATE: Mon Mar 21 09:22:28 JST 2016
+                  DATE: Wed Mar 23 12:42:00 JST 2016
                   SOURCE: /home/vagrant/app/app/views/about.scala.html
-                  HASH: 334722d1b224b87476ec0789f78542e6d69783f4
-                  MATRIX: 580->2|626->40|665->42|694->45|1334->655
+                  HASH: f47129785a48e7fe37d095af6ad0470f4d9eb2c3
+                  MATRIX: 580->2|626->40|665->42|694->45|1348->669
                   LINES: 22->2|22->2|22->2|23->3|45->25
                   -- GENERATED --
               */
