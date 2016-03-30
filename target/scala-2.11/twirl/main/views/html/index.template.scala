@@ -22,56 +22,55 @@ object index extends BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,Form
       _display_ {
 
 Seq[Any](format.raw/*4.92*/("""
-"""),_display_(/*5.2*/println(mins)),format.raw/*5.15*/("""
 
-"""),_display_(/*7.2*/main("Ozora Weather", "index")/*7.32*/ {_display_(Seq[Any](format.raw/*7.34*/("""
-"""),format.raw/*8.1*/("""<div class="container">
+"""),_display_(/*6.2*/main("Ozora Weather", "index")/*6.32*/ {_display_(Seq[Any](format.raw/*6.34*/("""
+"""),format.raw/*7.1*/("""<div class="container">
   <div class="row">
     <h2>東京のお天気</h2>
     <div class="col-sm-6" id="today">
-      <h3>"""),_display_(/*12.12*/dates(0)),format.raw/*12.20*/("""</h3>
+      <h3>"""),_display_(/*11.12*/dates(0)),format.raw/*11.20*/("""</h3>
       <h4>
-        <img src=""""),_display_(/*14.20*/(images(0).url)),format.raw/*14.35*/(""""> """),_display_(/*14.39*/images(0)/*14.48*/.title),format.raw/*14.54*/("""
-      """),format.raw/*15.7*/("""</h4>
+        <img src=""""),_display_(/*13.20*/(images(0).url)),format.raw/*13.35*/(""""> """),_display_(/*13.39*/images(0)/*13.48*/.title),format.raw/*13.54*/("""
+      """),format.raw/*14.7*/("""</h4>
       <table class="table">
         <thead>
         </thead>
         <tbody>
           <tr>
             <td>最高気温</td>
-            <td id="max">"""),_display_(/*22.27*/maxes(0)),format.raw/*22.35*/("""</td>
+            <td id="max">"""),_display_(/*21.27*/maxes(0)),format.raw/*21.35*/("""</td>
           </tr>
           <tr>
             <td>最低気温</td>
-            <td id="min">"""),_display_(/*26.27*/mins(0)),format.raw/*26.34*/("""</td>
+            <td id="min">"""),_display_(/*25.27*/mins(0)),format.raw/*25.34*/("""</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="col-sm-6" id="tomorrow">
-      <h3>"""),_display_(/*33.12*/dates(1)),format.raw/*33.20*/("""</h3>
+      <h3>"""),_display_(/*32.12*/dates(1)),format.raw/*32.20*/("""</h3>
       <h4>
-        <img src=""""),_display_(/*35.20*/(images(1).url)),format.raw/*35.35*/(""""> """),_display_(/*35.39*/images(1)/*35.48*/.title),format.raw/*35.54*/("""
-      """),format.raw/*36.7*/("""</h4>
+        <img src=""""),_display_(/*34.20*/(images(1).url)),format.raw/*34.35*/(""""> """),_display_(/*34.39*/images(1)/*34.48*/.title),format.raw/*34.54*/("""
+      """),format.raw/*35.7*/("""</h4>
       <table class="table">
         <thead>
         </thead>
         <tbody>
           <tr>
             <td>最高気温</td>
-            <td id="max">"""),_display_(/*43.27*/maxes(1)),format.raw/*43.35*/("""</td>
+            <td id="max">"""),_display_(/*42.27*/maxes(1)),format.raw/*42.35*/("""</td>
           </tr>
           <tr>
             <td>最低気温</td>
-            <td id="min">"""),_display_(/*47.27*/mins(1)),format.raw/*47.34*/("""</td>
+            <td id="min">"""),_display_(/*46.27*/mins(1)),format.raw/*46.34*/("""</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-""")))}),format.raw/*54.2*/("""
+""")))}),format.raw/*53.2*/("""
 """))}
   }
 
@@ -84,11 +83,11 @@ Seq[Any](format.raw/*4.92*/("""
 }
               /*
                   -- GENERATED --
-                  DATE: Tue Mar 22 18:11:30 JST 2016
+                  DATE: Wed Mar 30 22:02:16 JST 2016
                   SOURCE: /home/vagrant/app/app/views/index.scala.html
-                  HASH: 6f0a6c7633d1eec3cb9828b21e12130aa1fd5f20
-                  MATRIX: 633->82|811->172|838->174|871->187|899->190|937->220|976->222|1003->223|1143->336|1172->344|1235->380|1271->395|1302->399|1320->408|1347->414|1381->421|1558->571|1587->579|1703->668|1731->675|1876->793|1905->801|1968->837|2004->852|2035->856|2053->865|2080->871|2114->878|2291->1028|2320->1036|2436->1125|2464->1132|2576->1214
-                  LINES: 21->4|24->4|25->5|25->5|27->7|27->7|27->7|28->8|32->12|32->12|34->14|34->14|34->14|34->14|34->14|35->15|42->22|42->22|46->26|46->26|53->33|53->33|55->35|55->35|55->35|55->35|55->35|56->36|63->43|63->43|67->47|67->47|74->54
+                  HASH: f67a25b4c75cda11a7862811b3f78b3205ae8893
+                  MATRIX: 633->82|811->172|839->175|877->205|916->207|943->208|1083->321|1112->329|1175->365|1211->380|1242->384|1260->393|1287->399|1321->406|1498->556|1527->564|1643->653|1671->660|1816->778|1845->786|1908->822|1944->837|1975->841|1993->850|2020->856|2054->863|2231->1013|2260->1021|2376->1110|2404->1117|2516->1199
+                  LINES: 21->4|24->4|26->6|26->6|26->6|27->7|31->11|31->11|33->13|33->13|33->13|33->13|33->13|34->14|41->21|41->21|45->25|45->25|52->32|52->32|54->34|54->34|54->34|54->34|54->34|55->35|62->42|62->42|66->46|66->46|73->53
                   -- GENERATED --
               */
           

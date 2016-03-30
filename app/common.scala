@@ -4,13 +4,13 @@ import play.api.libs.concurrent.Akka
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.{ Application, GlobalSettings }
 import play.api.Play.current
-import actors.SampleActor
+import actors.DatabaseActor
 
 
 object Global extends GlobalSettings {
 
   val system = ActorSystem("SampleSystem")
-  val actor = system.actorOf(Props(classOf[SampleActor]))
+  val actor = system.actorOf(Props(classOf[DatabaseActor]))
 
   override def onStart(app: Application) = {
     QuartzSchedulerExtension(system).schedule("InsertMinTemp", actor, "min")
