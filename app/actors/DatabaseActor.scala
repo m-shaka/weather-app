@@ -6,7 +6,7 @@ import play.api.libs.json.Json
 import play.api.db.slick._
 import play.api.Play.current
 import slick.driver.PostgresDriver.simple._
-import org.joda.time.LocalDate
+import org.joda.time.{ LocalDate, DateTimeZone }
 import com.github.tototoshi.slick.PostgresJodaSupport._
 import play.api.libs.ws._
 import scala.concurrent.duration.{ Duration, MILLISECONDS }
@@ -37,7 +37,7 @@ class DatabaseActor extends Actor {
         ).head
         DB.withSession { implicit session =>
           val tempdatum = TableQuery[TempDatum]
-          val insertData = TempData(None, "Tokyo", min.toInt, null.asInstanceOf[Int] , new LocalDate())
+          val insertData = TempData(None, "Tokyo", min.toInt, null.asInstanceOf[Int] , new LocalDate(DateTimeZone.forID("Asia/Tokyo")))
           tempdatum.insert(insertData)
           println("inserting now!!!")
         }
@@ -54,7 +54,7 @@ class DatabaseActor extends Actor {
 
         DB.withSession { implicit session =>
           val temdatum = TableQuery[TempDatum]
-          val date = new LocalDate()
+          val date = new LocalDate(DateTimeZone.forID("Asia/Tokyo"))
           val city = "Tokyo"
 
           temdatum
@@ -71,7 +71,7 @@ class DatabaseActor extends Actor {
   def deleteOldData() = {
     DB.withSession { implicit session =>
       val temdatum = TableQuery[TempDatum]
-      val date = new LocalDate().minusWeeks(1)
+      val date = new LocalDate(DateTimeZone.forID("Asia/Tokyo")).minusWeeks(1)
       temdatum
       .filter(_.date < date)
       .delete

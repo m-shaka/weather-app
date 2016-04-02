@@ -8,7 +8,7 @@ import play.api.db.slick._
 import play.api.db.slick.Config.driver.simple._
 import models._
 import akka.actor.Actor
-import org.joda.time.LocalDate
+import org.joda.time.{ LocalDate, DateTimeZone }
 import com.github.tototoshi.slick.PostgresJodaSupport._
 import play.api.libs.ws._
 import scala.concurrent.duration.Duration
@@ -69,11 +69,14 @@ object Application extends Controller {
   def statistic = Action {
     DB.withSession {implicit session =>
       val tempdatum = TableQuery[TempDatum]
-      val date = new LocalDate().minusWeeks(1)
+      val fromDate = new LocalDate(DateTimeZone.forID("Asia/Tokyo")).minusWeeks(1)
+      val toDate = fromDate.plusDays(6)
       val city = "Tokyo"
       val weeklyTemps =
         tempdatum
-        .filter(row => row.date >= date && row.city === city)
+        .filter(row =>
+          row.date >= fromDate && row.date <= toDate &&row.city === city
+        )
         .sortBy(_.date)
         .list
 
